@@ -1,7 +1,10 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const port = process.env.PORT || 3000;
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
 
 const conn = mysql.createPool({
     host: 'us-cdbr-iron-east-04.cleardb.net',
@@ -10,12 +13,40 @@ const conn = mysql.createPool({
     database: 'heroku_a0e0bff8d195685'
 });
 
-app.get('/', (req, res) => {
-    let sql = "SELECT * FROM Usuario";
+app.get('/users', (req, res) => {
+    let sql = `SELECT * FROM Usuario`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
     });
 });
+
+app.post('/login', (req, res) => {
+    const datos = req.body;
+    const username = datos.username;
+    const password = datos.password;
+    let sql = `SELECT 1 FROM Usuario WHERE username='${username}' AND password='${password}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        if(results.length === 1) {
+            res.send({auth:true, token:123});
+        } else {
+            res.send({auth:false});
+        }
+    });
+});
+
+app.post('/register', (req, res) => {
+    const datos = req.body;
+    const username = datos.username;
+    const password = datos.password;
+    let sql = `INSERT INTO Usuario VALUES (1,'${username}','${password}')`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+});
+
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
