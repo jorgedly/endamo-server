@@ -1,0 +1,12 @@
+{
+    "name": "endamo",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mysql": "^2.18.1"
+    },
+    "engines": {
+        "node": "12.x",
+        "npm": "6.x"
+    }
+}
