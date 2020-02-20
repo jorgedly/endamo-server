@@ -31,7 +31,7 @@ app.post('/login', (req, res) => {
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         if(results.length === 1) {
-            res.send({auth:true, token:123});
+            res.send({auth:true, token:123, username, password});
         } else {
             res.send({auth:false, username, password});
         }
