@@ -33,7 +33,7 @@ app.post('/login', (req, res) => {
         if(results.length === 1) {
             res.send({auth:true, token:123});
         } else {
-            res.send({auth:false});
+            res.send({auth:false, username, password});
         }
     });
 });
