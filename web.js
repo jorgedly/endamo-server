@@ -38,7 +38,7 @@ app.post('/login', (req, res) => {
     });
 });
 
-/*app.post('/register', (req, res) => {
+app.post('/register', (req, res) => {
     const datos = req.body;
     const username = datos.username;
     const password = datos.password;
@@ -68,7 +68,7 @@ app.post('/registerE', (req, res) => {
         }
     });
 });
-*/
+
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
