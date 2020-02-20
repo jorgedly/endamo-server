@@ -5,8 +5,8 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
 
 const conn = mysql.createPool({
     host: 'us-cdbr-iron-east-04.cleardb.net',
