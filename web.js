@@ -5,8 +5,8 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-app.use(cors());
 app.use(bodyParser.json());
+app.use(cors());
 
 const conn = mysql.createPool({
     host: 'us-cdbr-iron-east-04.cleardb.net',
@@ -25,7 +25,7 @@ app.get('/users', (req, res) => {
 
 app.post('/login', (req, res) => {
     const datos = req.body;
-    res.send(req.body);
+    res.send(req);
     /*const username = datos.username;
     const password = datos.password;
     let sql = `SELECT 1 FROM Usuario WHERE username='${username}' AND password='${password}'`;
