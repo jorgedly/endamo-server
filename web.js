@@ -3,7 +3,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
+app.use(cors());
 app.use(bodyParser.json());
 
 const conn = mysql.createPool({
@@ -40,10 +42,30 @@ app.post('/register', (req, res) => {
     const datos = req.body;
     const username = datos.username;
     const password = datos.password;
-    let sql = `INSERT INTO Usuario VALUES (1,'${username}','${password}')`;
+    const email = datos.email;
+    const avatar = datos.avatar;
+    let sql = `INSERT INTO Usuario (username, email, password, avatar) VALUES ('${username}','${email}','${password}', '${avatar}')`;
     let query = conn.query(sql, (err, results) => {
-        if (err) throw err;
-        res.send(results);
+        if (err) {
+            res.send({'success': false});
+        } else {
+            res.send({'success': true});
+        }
+    });
+});
+
+app.post('/registerE', (req, res) => {
+    const datos = req.body;
+    const username = datos.username;
+    const password = datos.password;
+    const email = datos.email;
+    let sql = `INSERT INTO Usuario (username, email, password) VALUES ('${username}','${email}','${password}')`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({'success': false});
+        } else {
+            res.send({'success': true});
+        }
     });
 });
 
