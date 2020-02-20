@@ -25,8 +25,7 @@ app.get('/users', (req, res) => {
 
 app.post('/login', (req, res) => {
     const datos = req.body;
-    res.send(req);
-    /*const username = datos.username;
+    const username = datos.username;
     const password = datos.password;
     let sql = `SELECT 1 FROM Usuario WHERE username='${username}' AND password='${password}'`;
     let query = conn.query(sql, (err, results) => {
@@ -36,10 +35,10 @@ app.post('/login', (req, res) => {
         } else {
             res.send({auth:false});
         }
-    });*/
+    });
 });
 
-app.post('/register', (req, res) => {
+/*app.post('/register', (req, res) => {
     const datos = req.body;
     const username = datos.username;
     const password = datos.password;
@@ -69,7 +68,7 @@ app.post('/registerE', (req, res) => {
         }
     });
 });
-
+*/
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
