@@ -25,7 +25,8 @@ app.get('/users', (req, res) => {
 
 app.post('/login', (req, res) => {
     const datos = req.body;
-    const username = datos.username;
+    res.send(req.body);
+    /*const username = datos.username;
     const password = datos.password;
     let sql = `SELECT 1 FROM Usuario WHERE username='${username}' AND password='${password}'`;
     let query = conn.query(sql, (err, results) => {
@@ -35,7 +36,7 @@ app.post('/login', (req, res) => {
         } else {
             res.send({auth:false});
         }
-    });
+    });*/
 });
 
 app.post('/register', (req, res) => {
@@ -59,7 +60,7 @@ app.post('/registerE', (req, res) => {
     const username = datos.username;
     const password = datos.password;
     const email = datos.email;
-    let sql = `INSERT INTO Usuario (username, email, password) VALUES ('${username}','${email}','${password}')`;
+    let sql = `INSERT INTO Empresa (username, email, password) VALUES ('${username}','${email}','${password}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
             res.send({'success': false});
