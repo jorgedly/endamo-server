@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 //app.use(cors());
-
+app.use(bodyParser.json());
 
 const conn = mysql.createPool({
     host: 'us-cdbr-iron-east-04.cleardb.net',
@@ -70,7 +70,5 @@ app.post('/registerE', (req, res) => {
         }
     });
 });
-
-app.use(bodyParser.json());
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
