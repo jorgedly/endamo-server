@@ -47,7 +47,7 @@ app.post('/register', (req, res) => {
     let sql = `INSERT INTO Usuario (username, email, password, avatar) VALUES ('${username}','${email}','${password}', '${avatar}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
-            res.send({"dato": "MAL", "results": results});
+            res.send({"dato": "MAL", "errores": err});
             //res.send({'success': false});
         } else {
             res.send({"dato": "BIEN", "results": results});
