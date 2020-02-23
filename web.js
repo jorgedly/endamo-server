@@ -50,7 +50,7 @@ app.post('/register', (req, res) => {
             res.send({"dato": "not ok", "results": results});
             //res.send({'success': false});
         } else {
-            res.send({"dato": "not ok", "results": results});
+            res.send({"dato": "ok", "results": results});
             //res.send({'success': true});
         }
     });
