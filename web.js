@@ -90,9 +90,8 @@ app.get('/getID/:email',(req,res) => {
     const { email } = req.params;
     let SQLquery = `SELECT idUsuario FROM usuario WHERE email = '${email}'`;
     let response = conn.query(SQLquery,(err,results) => {
-        res.json(response);
-        if(response.rows > 0){
-            res.json(response.rows[0]);
+        if(results.rows > 0){
+            res.json(results.rows[0]);
         }
         else
             res.json({'Error:': 'User not found'})
