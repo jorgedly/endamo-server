@@ -94,7 +94,7 @@ app.get('/getID/:email',(req,res) => {
             res.json(results.rows[0]);
         }
         else
-            res.json({'Error:': 'User not found'})
+            res.json(results);
     })
 })
 
