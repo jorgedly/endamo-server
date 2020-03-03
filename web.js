@@ -86,7 +86,7 @@ app.post('/registerE', (req, res) => {
     });
 });
 
-app.post('/addProudct',(req,res) => {
+app.post('/addProduct',(req,res) => {
     const {name, price, amount, id} = req.body;
     let SQLquery = `INSERT INTO producto(nombre,precio,cantidad,empresa_idEmpresa) VALUES ('${name}',${price},${amount},${id})`;
     let response = conn.query(SQLquery,(err,results) => {
