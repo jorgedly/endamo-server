@@ -86,4 +86,9 @@ app.post('/registerE', (req, res) => {
     });
 });
 
+
+app.get('/getDatos',(req,res) => {
+    res.json({response:"gg"});
+})
+
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`))
