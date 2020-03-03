@@ -29,6 +29,17 @@ app.get('/products', (req, res) => {
     });
 });
 
+app.get('/users', (req, res) => {
+    let sql = `SELECT * FROM Usuario`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
 app.post('/login', (req, res) => {
     const datos = req.body;
     const username = datos.username;
