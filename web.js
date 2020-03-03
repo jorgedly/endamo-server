@@ -30,10 +30,10 @@ app.post('/login', (req, res) => {
     let sql = `SELECT 1 FROM Usuario WHERE username='${username}' AND password='${password}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
-        if(results.length === 1) {
-            res.send({auth:true, token:123, username, password});
+        if (results.length === 1) {
+            res.send({ auth: true, token: 123, username, password });
         } else {
-            res.send({auth:false, "username":username,"password": password});
+            res.send({ auth: false, "username": username, "password": password });
         }
     });
 });
@@ -47,9 +47,9 @@ app.post('/register', (req, res) => {
     let sql = `INSERT INTO Usuario (username, email, password, avatar) VALUES ('${username}','${email}','${password}', '${avatar}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
-            res.send({'success': false});
+            res.send({ 'success': false });
         } else {
-            res.send({'success': true});
+            res.send({ 'success': true });
         }
     });
 });
@@ -62,13 +62,20 @@ app.post('/registerE', (req, res) => {
     let sql = `INSERT INTO Empresa (username, email, password) VALUES ('${username}','${email}','${password}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
-            res.send({'success': false});
+            res.send({ 'success': false });
         } else {
-            res.send({'success': true});
+            res.send({ 'success': true });
         }
     });
 });
 
-
+//Listar los productos
+app.get('listaProdutos', (req, res) => {
+    let sql = `SELECT * FROM Usuario`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
