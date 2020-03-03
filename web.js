@@ -86,14 +86,24 @@ app.post('/registerE', (req, res) => {
     });
 });
 
-app.post('/addProduct',(req,res) => {
-    const {name, price, amount, id} = req.body;
-    let SQLquery = `INSERT INTO producto(nombre,precio,cantidad,empresa_idEmpresa) VALUES ('${name}',${price},${amount},${id})`;
+app.get('/getID/:email',(req,res) => {
+    const { email } = req.params;
+    let SQLquery = `SELECT idUsuario FROM usuario WHERE email = '${email}'`;
     let response = conn.query(SQLquery,(err,results) => {
         if(err)
             res.send({'success:':false});
         else
-            res.send({'succes': true});
+            res.send();
+    })
+})
+
+app.post('/addProduct',(req,res) => {
+    const {name, price, amount, id} = req.body;
+    let SQLquery = `INSERT INTO producto(nombre,precio,cantidad,empresa_idEmpresa) VALUES ('${name}',${price},${amount},${id})`;
+    let result = conn.query(SQLquery,(err,results) => {
+        if(result.rows > 0){
+            res.send(result.rows[0]);
+        }
     })
 })
 
