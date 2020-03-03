@@ -102,7 +102,7 @@ app.post('/addProduct',(req,res) => {
     const {name, price, amount, id} = req.body;
     let SQLquery = `INSERT INTO producto(nombre,precio,cantidad,empresa_idEmpresa) VALUES ('${name}',${price},${amount},${id})`;
     let result = conn.query(SQLquery,(err,results) => {
-        if(err){
+        if(!err){
             res.json({'Response:': 'Product added correctly'});
         }else
             res.json({'Response:': 'Error'}); 
