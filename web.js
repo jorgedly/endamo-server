@@ -48,9 +48,9 @@ app.post('/login', (req, res) => {
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         if(results.length === 1) {
-            res.send({auth:true});
+            res.send({auth:true, "username": username, "password": password});
         } else {
-            res.send({auth:false});
+            res.send({auth:false, "username": username, "password": password});
         }
     });
 });
