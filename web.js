@@ -102,8 +102,9 @@ app.post('/addProduct',(req,res) => {
     let SQLquery = `INSERT INTO producto(nombre,precio,cantidad,empresa_idEmpresa) VALUES ('${name}',${price},${amount},${id})`;
     let result = conn.query(SQLquery,(err,results) => {
         if(result.rows > 0){
-            res.send(result.rows[0]);
-        }
+            res.send(result.rows);
+        }else
+            res.json({'Error:': 'User not found'})
     })
 })
 
