@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-//app.use(cors());
+app.use(cors());
 app.use(bodyParser.json());
 
 const conn = mysql.createPool({
@@ -30,10 +30,10 @@ app.post('/login', (req, res) => {
     let sql = `SELECT 1 FROM Usuario WHERE username='${username}' AND password='${password}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
-        if(results.length === 1) {
-            res.send({auth:true, token:123, username, password});
+        if (results.length === 1) {
+            res.send({ auth: true, token: 123, username, password });
         } else {
-            res.send({auth:false, "username":username,"password": password});
+            res.send({ auth: false, "username": username, "password": password });
         }
     });
 });
@@ -47,9 +47,9 @@ app.post('/register', (req, res) => {
     let sql = `INSERT INTO Usuario (username, email, password, avatar) VALUES ('${username}','${email}','${password}', '${avatar}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
-            res.send({'success': false});
+            res.send({ 'success': false });
         } else {
-            res.send({'success': true});
+            res.send({ 'success': true });
         }
     });
 });
@@ -62,13 +62,61 @@ app.post('/registerE', (req, res) => {
     let sql = `INSERT INTO Empresa (username, email, password) VALUES ('${username}','${email}','${password}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
-            res.send({'success': false});
+            res.send({ 'success': false });
         } else {
-            res.send({'success': true});
+            res.send({ 'success': true });
         }
     });
 });
 
+//Listar los productos
+app.get('/listaProdutos/:id', (req, res) => {
 
+    const empresa = req.params.id;
+    let sql = `SELECT * FROM producto where empresa_idEmpresa = '${empresa}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+});
+
+// elimino el producto
+app.delete('/eliminar/:id', (req, res) => {
+    const { id } = req.params;
+    let sql = `DELETE FROM producto WHERE idProducto = '${[id]}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            err.json({ messaje: "Erro al eliminar producto" });
+        } else {
+            res.json({ message: "El producto se ha eliminado" });
+        }
+    })
+});
+
+// editar productos
+app.put('/editar/producto/:id', (req, res) => {
+
+    const { id } = req.params;
+    const producto = req.body;
+
+    let sql = `UPDATE producto set nombre = '${producto.name}', precio = ${producto.price}, cantidad = ${producto.amount} WHERE idProducto = ${id}`;
+    console.log(sql);
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+
+
+});
+
+// obtener un producto
+app.get('/producto/:id', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM producto WHERE idProducto = '${[id]}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
