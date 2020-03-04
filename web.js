@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-//app.use(cors());
+app.use(cors());
 app.use(bodyParser.json());
 
 const conn = mysql.createPool({
@@ -71,14 +71,27 @@ app.post('/registerE', (req, res) => {
 
 //Listar los productos
 app.get('/listaProdutos/:id', (req, res) => {
-    
+
     const empresa = req.params.id;
-    console.log(empresa);
     let sql = `SELECT * FROM producto where empresa_idEmpresa = '${empresa}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
     });
+});
+
+// elimino el producto
+app.delete('/eliminar/:id', (req, res) => {
+    const { id } = req.params;
+    let sql = `DELETE FROM producto WHERE idProducto = '${[id]}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            err.json({ messaje: "Erro al eliminar producto" });
+        } else {
+            res.json({ message: "El producto se ha eliminado" });
+        }
+    })
+
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
