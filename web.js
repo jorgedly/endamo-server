@@ -70,8 +70,11 @@ app.post('/registerE', (req, res) => {
 });
 
 //Listar los productos
-app.get('listaProdutos', (req, res) => {
-    let sql = `SELECT * FROM Usuario`;
+app.get('/listaProdutos/:id', (req, res) => {
+    
+    const empresa = req.params.id;
+    console.log(empresa);
+    let sql = `SELECT * FROM producto where empresa_idEmpresa = '${empresa}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
