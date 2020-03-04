@@ -91,7 +91,32 @@ app.delete('/eliminar/:id', (req, res) => {
             res.json({ message: "El producto se ha eliminado" });
         }
     })
+});
 
+// editar productos
+app.put('/editar/producto/:id', (req, res) => {
+
+    const { id } = req.params;
+    const producto = req.body;
+
+    let sql = `UPDATE producto set nombre = '${producto.name}', precio = ${producto.price}, cantidad = ${producto.amount} WHERE idProducto = ${id}`;
+    console.log(sql);
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+
+
+});
+
+// obtener un producto
+app.get('/producto/:id', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM producto WHERE idProducto = '${[id]}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
