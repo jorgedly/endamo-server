@@ -42,15 +42,23 @@ app.get('/users', (req, res) => {
 
 app.post('/login', (req, res) => {
     const datos = req.body;
-    const username = datos.username;
+    const email = datos.email;
     const password = datos.password;
-    let sql = `SELECT 1 FROM Usuario WHERE username='${username}' AND password='${password}'`;
+    let sql = `SELECT 1 FROM Usuario WHERE email='${email}' AND password='${password}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
-        if(results.length === 1) {
-            res.send({auth:true});
+        if (results.length === 1) {
+            res.send({ auth: true, user: true });
         } else {
-            res.send({auth:false});
+            let sql2 = `SELECT 1 FROM Empresa WHERE email='${email}' AND password='${password}'`;
+            let query2 = conn.query(sql2, (err2, results2) => {
+                if (err2) throw err2;
+                if (results2.length === 1) {
+                    res.send({ auth: true, user: false });
+                } else {
+                    res.send({ auth: false });
+                }
+            });
         }
     });
 });
