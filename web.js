@@ -40,6 +40,17 @@ app.get('/users', (req, res) => {
     });
 });
 
+app.get('/companies', (req, res) => {
+    let sql = `SELECT * FROM Empresa`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
 app.post('/login', (req, res) => {
     const datos = req.body;
     const email = datos.email;
