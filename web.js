@@ -40,6 +40,17 @@ app.get('/users', (req, res) => {
     });
 });
 
+app.get('/companies', (req, res) => {
+    let sql = `SELECT * FROM Empresa`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
 app.post('/login', (req, res) => {
     const datos = req.body;
     const email = datos.email;
@@ -94,9 +105,9 @@ app.post('/registerE', (req, res) => {
     });
 });
 
-app.get('/getID/:email',(req,res) => {
+app.get('/getIdEmpresa/:email',(req,res) => {
     const { email } = req.params;
-    let SQLquery = `SELECT idUsuario FROM usuario WHERE email = '${email}'`;
+    let SQLquery = `SELECT idEmpresa FROM Empresa WHERE email = '${email}'`;
     let response = conn.query(SQLquery,(err,results) => {
         if(!err){
             res.json(results[0]);
@@ -117,5 +128,55 @@ app.post('/addProduct',(req,res) => {
             
     })
 })
+
+//Listar los productos
+app.get('/listaProdutos/:id', (req, res) => {
+
+    const empresa = req.params.id;
+    let sql = `SELECT * FROM producto where empresa_idEmpresa = '${empresa}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+});
+
+// elimino el producto
+app.delete('/eliminar/:id', (req, res) => {
+    const { id } = req.params;
+    let sql = `DELETE FROM producto WHERE idProducto = '${[id]}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            err.json({ messaje: "Erro al eliminar producto" });
+        } else {
+            res.json({ message: "El producto se ha eliminado" });
+        }
+    })
+});
+
+// editar productos
+app.put('/editar/producto/:id', (req, res) => {
+
+    const { id } = req.params;
+    const producto = req.body;
+
+    let sql = `UPDATE producto set nombre = '${producto.name}', precio = ${producto.price}, cantidad = ${producto.amount} WHERE idProducto = ${id}`;
+    console.log(sql);
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+
+
+});
+
+// obtener un producto
+app.get('/producto/:id', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM producto WHERE idProducto = '${[id]}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+});
 
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`))
