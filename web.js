@@ -3,10 +3,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const conn = require('../conexion');
-const usuarioRouter = require('./routes/usuario');
-const productoRouter = require('./routes/producto');
-const empresaRouter = require('./routes/empresa');
+const conn = require('./conexion');
+const usuarioRoutes = require('./routes/usuario');
+const productoRoutes = require('./routes/producto');
+const empresaRoutes = require('./routes/empresa');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -14,9 +14,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.use('/usuario', usuarioRouter);
-app.use('/producto', productoRouter);
-app.use('/empresa', empresaRouter);
+app.use('/usuario', usuarioRoutes);
+app.use('/producto', productoRoutes);
+app.use('/empresa', empresaRoutes);
 
 app.get('/getIdEmpresa/:email', (req, res) => {
     const { email } = req.params;
