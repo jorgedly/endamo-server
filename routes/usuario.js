@@ -15,13 +15,13 @@ router.get('/listado', (req, res) => {
 
 router.post('/login', (req, res) => {
     const { email, password } = req.body;
-    let sql = `SELECT 1 FROM Usuario WHERE email='${email}' AND password='${password}'`;
+    let sql = `SELECT nombre FROM Usuario WHERE email='${email}' AND password='${password}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         if (results.length === 1) {
-            res.send({ auth: true, user: true });
+            res.send({ auth: true, user: true, nombre: results[0].nombre });
         } else {
-            let sql2 = `SELECT 1 FROM Empresa WHERE email='${email}' AND password='${password}'`;
+            let sql2 = `SELECT nombre FROM Empresa WHERE email='${email}' AND password='${password}'`;
             let query2 = conn.query(sql2, (err2, results2) => {
                 if (err2) throw err2;
                 if (results2.length === 1) {
