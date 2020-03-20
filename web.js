@@ -4,6 +4,7 @@ const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const conn = require('./conexion');
+const indexRoutes = require('./routes/index');
 const usuarioRoutes = require('./routes/usuario');
 const productoRoutes = require('./routes/producto');
 const empresaRoutes = require('./routes/empresa');
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+app.use('', indexRoutes);
 app.use('/usuario', usuarioRoutes);
 app.use('/producto', productoRoutes);
 app.use('/empresa', empresaRoutes);
