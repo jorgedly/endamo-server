@@ -14,8 +14,8 @@ router.get('/listado', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-    const { email, username, password } = req.body;
-    let sql = `INSERT INTO Empresa (email, nombre, password) VALUES ('${email}','${username}','${password}')`;
+    const { email, nombre, password } = req.body;
+    let sql = `INSERT INTO Empresa (email, nombre, password) VALUES ('${email}','${nombre}','${password}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
             res.send({ 'success': false });

@@ -25,7 +25,7 @@ router.post('/login', (req, res) => {
             let query2 = conn.query(sql2, (err2, results2) => {
                 if (err2) throw err2;
                 if (results2.length === 1) {
-                    res.send({ auth: true, user: false });
+                    res.send({ auth: true, user: false, nombre: results2[0].nombre });
                 } else {
                     res.send({ auth: false });
                 }
@@ -35,8 +35,8 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-    const { email, username, password, avatar } = req.body;
-    let sql = `INSERT INTO Usuario (email, username, password, avatar) VALUES ('${email}','${username}','${password}', '${avatar}')`;
+    const { nombre, email, username, password, avatar } = req.body;
+    let sql = `INSERT INTO Usuario (nombre, email, username, password, avatar) VALUES ('${nombre}','${email}','${username}','${password}', '${avatar}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
             res.send({ 'success': false });
