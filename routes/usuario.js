@@ -59,4 +59,17 @@ router.post('/getData', (req, res) => {
     });
 });
 
+router.put('/modificarUsuario', (req, res) => {
+    const { email, password, avatar } = req.body;
+    let sql = `UPDATE Usuario SET password='${password}', avatar='${avatar}' WHERE email='${email}'`;
+    
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({ 'success': false });
+        } else {
+            res.send({ 'success': true });
+        }
+    });
+});
+
 module.exports = router;
