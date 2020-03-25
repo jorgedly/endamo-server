@@ -46,4 +46,17 @@ router.post('/register', (req, res) => {
     });
 });
 
+router.post('/getData', (req, res) => {
+    const { email } = req.body;
+    let sql = `SELECT password, avatar FROM Usuario WHERE email='${email}'`;
+    
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
 module.exports = router;
