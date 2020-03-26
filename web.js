@@ -48,7 +48,7 @@ app.post('/addProduct', (req, res) => {
 app.get('/listaProdutos/:id', (req, res) => {
 
     const empresa = req.params.id;
-    let sql = `SELECT * FROM producto where id_empresa = '${empresa["id_empresa"]}'`;
+    let sql = `SELECT * FROM producto where id_empresa = ${empresa}`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
