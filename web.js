@@ -48,7 +48,7 @@ app.post('/addProduct', (req, res) => {
 app.get('/listaProdutos/:id', (req, res) => {
 
     const empresa = req.params.id;
-    let sql = `SELECT * FROM producto where empresa_idEmpresa = '${empresa}'`;
+    let sql = `SELECT * FROM producto where id_empresa = '${empresa}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
@@ -58,7 +58,7 @@ app.get('/listaProdutos/:id', (req, res) => {
 // elimino el producto
 app.delete('/eliminar/:id', (req, res) => {
     const { id } = req.params;
-    let sql = `DELETE FROM producto WHERE idProducto = '${[id]}'`;
+    let sql = `DELETE FROM producto WHERE id_producto = '${[id]}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
             err.json({ messaje: "Erro al eliminar producto" });
@@ -74,7 +74,7 @@ app.put('/editar/producto/:id', (req, res) => {
     const { id } = req.params;
     const producto = req.body;
 
-    let sql = `UPDATE producto set nombre = '${producto.name}', precio = ${producto.price}, cantidad = ${producto.amount} WHERE idProducto = ${id}`;
+    let sql = `UPDATE producto set nombre = '${producto.name}', precio = ${producto.price}, cantidad = ${producto.amount} WHERE id_producto = ${id}`;
     console.log(sql);
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
@@ -87,7 +87,7 @@ app.put('/editar/producto/:id', (req, res) => {
 // obtener un producto
 app.get('/producto/:id', (req, res) => {
     const { id } = req.params;
-    let sql = `SELECT * FROM producto WHERE idProducto = '${[id]}'`;
+    let sql = `SELECT * FROM producto WHERE id_[roducto = '${[id]}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
