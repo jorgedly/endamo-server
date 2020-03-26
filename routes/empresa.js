@@ -37,9 +37,9 @@ router.get('/edit/:email',(req,res) => {
     })
 })
 
-router.post('/update',(req,res) => {
-    const {id, name, password} = req.body;
-    let sql = `UPDATE empresa SET nombre = '${name}', password = '${password}' WHERE id = ${id}`
+router.put('/update',(req,res) => {
+    const {email, name, password} = req.body;
+    let sql = `UPDATE empresa SET nombre = '${name}', password = '${password}' WHERE email = '${email}'`
     let query = conn.query(sql, (err, results) => {
         if (err) {
             res.send({ 'success': false });
