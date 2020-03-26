@@ -25,4 +25,16 @@ router.post('/register', (req, res) => {
     });
 });
 
+router.get('/edit/:id',(req,res) => {
+    const {id} = req.params;
+    let sql = `SELECT * FROM empresa WHERE id_empresa=${id}`
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    })
+})
+
 module.exports = router;
