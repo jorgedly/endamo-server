@@ -87,7 +87,7 @@ app.put('/editar/producto/:id', (req, res) => {
 // obtener un producto
 app.get('/producto/:id', (req, res) => {
     const { id } = req.params;
-    let sql = `SELECT * FROM producto WHERE id_[roducto = '${[id]}'`;
+    let sql = `SELECT * FROM producto WHERE id_producto = '${[id]}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
