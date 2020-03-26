@@ -37,4 +37,16 @@ router.get('/edit/:id',(req,res) => {
     })
 })
 
+router.post('/update',(req,res) => {
+    const {id, name, password} = req.body;
+    let sql = `UPDATE empresa SET nombre = '${name}', password = '${password}' WHERE id = ${id}`
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({ 'success': false });
+        } else {
+            res.send({ 'success': true });
+        }
+    })
+})
+
 module.exports = router;

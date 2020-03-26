@@ -22,7 +22,7 @@ app.use('/empresa', empresaRoutes);
 
 app.get('/getIdEmpresa/:email', (req, res) => {
     const { email } = req.params;
-    let SQLquery = `SELECT idEmpresa FROM Empresa WHERE email = '${email}'`;
+    let SQLquery = `SELECT id_empresa FROM Empresa WHERE email = '${email}'`;
     let response = conn.query(SQLquery, (err, results) => {
         if (!err) {
             res.json(results[0]);
