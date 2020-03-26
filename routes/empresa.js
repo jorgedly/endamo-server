@@ -25,9 +25,9 @@ router.post('/register', (req, res) => {
     });
 });
 
-router.get('/edit/:id',(req,res) => {
+router.get('/edit/:email',(req,res) => {
     const {id} = req.params;
-    let sql = `SELECT * FROM empresa WHERE id_empresa=${id}`
+    let sql = `SELECT * FROM empresa WHERE email='${id}'`
     let query = conn.query(sql, (err, results) => {
         if (err) {
             res.send([]);
