@@ -141,4 +141,24 @@ app.get('/promocion', (req, res) => {
 });
 
 
+//obtener el reporte mas vendido
+app.get('/reporteTopProductoMasVendido ', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM promocion WHERE activo = 1`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+});
+
+//obtener el reporte menos vendido
+app.get('/reporteTopProductoMenosVendido ', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM promocion WHERE activo = 1`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+});
+
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`))
