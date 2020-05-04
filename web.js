@@ -7,6 +7,7 @@ const conn = require('./conexion');
 const usuarioRoutes = require('./routes/usuario');
 const productoRoutes = require('./routes/producto');
 const empresaRoutes = require('./routes/empresa');
+const envioRoutes = require('./routes/envio')
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.use('/usuario', usuarioRoutes);
 app.use('/producto', productoRoutes);
 app.use('/empresa', empresaRoutes);
+app.use('/enviar', envioRoutes)
 
 app.get('/getIdEmpresa/:email', (req, res) => {
     const { email } = req.params;
@@ -197,5 +199,7 @@ app.post('/crearDetalleFactura', (req, res) => {
         }
     });
 });
+
+
 
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`))
