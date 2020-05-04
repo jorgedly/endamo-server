@@ -185,4 +185,17 @@ app.post('/crearFactura', (req, res) => {
     });
 });
 
+//insertar detalle factura
+app.post('/crearDetalleFactura', (req, res) => {
+    const { id_factura, id_producto, cantidad} = req.body;
+    let sql = `INSERT INTO detalle_factura(id_factura,id_producto,cantidad) VALUES (${id_factura},${id_producto},${cantidad})`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({'success': 0});
+        } else {
+            res.send({'success': 1});
+        }
+    });
+});
+
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`))
