@@ -25,4 +25,28 @@ router.post('/register', (req, res) => {
     });
 });
 
+router.get('/edit/:email',(req,res) => {
+    const {email} = req.params;
+    let sql = `SELECT * FROM empresa WHERE email='${email}'`
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    })
+})
+
+router.put('/update',(req,res) => {
+    const {email, name, password} = req.body;
+    let sql = `UPDATE empresa SET nombre = '${name}', password = '${password}' WHERE email = '${email}'`
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({ 'success': false });
+        } else {
+            res.send({ 'success': true });
+        }
+    })
+})
+
 module.exports = router;
