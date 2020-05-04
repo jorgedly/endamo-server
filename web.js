@@ -144,7 +144,7 @@ app.get('/promocion', (req, res) => {
 
 
 //obtener el reporte mas vendido
-app.get('/reporteTopProductoMasVendido ', (req, res) => {
+app.get('/reporteTopProductoMasVendido/:id', (req, res) => {
     const { id } = req.params;
     let sql = `SELECT p.id_producto, p.nombre, SUM(df.cantidad) as "cantidad"
     FROM detalle_factura df INNER JOIN producto p 
@@ -159,7 +159,7 @@ app.get('/reporteTopProductoMasVendido ', (req, res) => {
 });
 
 //obtener el reporte menos vendido
-app.get('/reporteTopProductoMenosVendido ', (req, res) => {
+app.get('/reporteTopProductoMenosVendido/:id', (req, res) => {
     const { id } = req.params;
     let sql = `SELECT p.id_producto, p.nombre, SUM(df.cantidad) as "cantidad"
     FROM detalle_factura df INNER JOIN producto p 
