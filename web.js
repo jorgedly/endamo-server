@@ -97,7 +97,7 @@ app.get('/producto/:id', (req, res) => {
 
 //ingresar promocion
 app.post('/ingresarPromocion', (req, res) => {
-    const { ActivoNoActivo,id_empresa, id_producto } = req.body;
+    const { ActivoNoActivo, id_empresa, id_producto } = req.body;
     let SQLquery = `INSERT INTO promocion(ActivoNoActivo,id_empresa,id_producto) 
     VALUES (${ActivoNoActivo},${id_empresa},${id_producto})`;
     let result = conn.query(SQLquery, (err, results) => {
@@ -146,7 +146,12 @@ app.get('/promocion', (req, res) => {
 //obtener el reporte mas vendido
 app.get('/reporteTopProductoMasVendido ', (req, res) => {
     const { id } = req.params;
-    let sql = `SELECT * FROM promocion WHERE activo = 1`;
+    let sql = `SELECT p.id_producto, p.nombre, SUM(df.cantidad) as "cantidad"
+    FROM detalle_factura df INNER JOIN producto p 
+    ON df.id_producto = p.id_producto
+    where p.id_empresa = '${[id]}'
+    group by p.id_producto 
+    order by cantidad DESC`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
@@ -156,7 +161,12 @@ app.get('/reporteTopProductoMasVendido ', (req, res) => {
 //obtener el reporte menos vendido
 app.get('/reporteTopProductoMenosVendido ', (req, res) => {
     const { id } = req.params;
-    let sql = `SELECT * FROM promocion WHERE activoNoActivo = 1`;
+    let sql = `SELECT p.id_producto, p.nombre, SUM(df.cantidad) as "cantidad"
+    FROM detalle_factura df INNER JOIN producto p 
+    ON df.id_producto = p.id_producto
+    where p.id_empresa = '${[id]}'
+    group by p.id_producto 
+    order by cantidad ASC`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
