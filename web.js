@@ -173,4 +173,41 @@ app.get('/reporteTopProductoMenosVendido/:id', (req, res) => {
     })
 });
 
+app.post('/getId', (req,res )=>{
+    const { email } = req.body;
+
+    let sql = `SELECT id_usuario FROM usuario WHERE email = '${email}'`;
+    let query = conn.query(sql, (err, results) => {
+        if(err) res.send({'Error': err});
+
+        res.send(results);
+    });
+})
+
+//insertar factura
+app.post('/crearFactura', (req, res) => {
+    const { fecha, id_usuario, total, nit, nombre } = req.body;
+    let sql = `INSERT INTO factura(fecha,id_usuario,total,nit,nombre) VALUES ('${fecha}',${id_usuario},${total},'${nit}','${nombre}')`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({ 'creado': 0 });
+        } else {
+            res.send({ 'creado': results.insertId  });
+        }
+    });
+});
+
+//insertar detalle factura
+app.post('/crearDetalleFactura', (req, res) => {
+    const { id_factura, id_producto, cantidad} = req.body;
+    let sql = `INSERT INTO detalle_factura(id_factura,id_producto,cantidad) VALUES (${id_factura},${id_producto},${cantidad})`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({'success': 0});
+        } else {
+            res.send({'success': 1});
+        }
+    });
+});
+
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`))
