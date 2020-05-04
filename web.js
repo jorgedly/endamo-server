@@ -97,12 +97,13 @@ app.get('/producto/:id', (req, res) => {
 
 //ingresar promocion
 app.post('/ingresarPromocion', (req, res) => {
-    const { ActivoNoActivo, id_empresa, id_producto } = req.body;
-    let SQLquery = `INSERT INTO promocion(ActivoNoActivo,id_empresa,id_producto) 
-    VALUES (${ActivoNoActivo},${id_empresa},${id_producto})`;
+    let id_promocion = id_producto;
+    const {id_promocion, ActivoNoActivo, id_empresa, id_producto } = req.body;
+    let SQLquery = `INSERT INTO promocion(id_promocion,ActivoNoActivo,id_empresa,id_producto) 
+    VALUES (${id_promocion},${ActivoNoActivo},${id_empresa},${id_producto})`;
     let result = conn.query(SQLquery, (err, results) => {
         if (!err) {
-            res.json({ 'Response:': 'Product added correctly' });
+            res.json({ 'Response:': 'promocion added correctly' });
         } else
             res.json({ 'Response:': 'Error' });
     })
@@ -151,7 +152,8 @@ app.get('/reporteTopProductoMasVendido/:id', (req, res) => {
     ON df.id_producto = p.id_producto
     where p.id_empresa = '${[id]}'
     group by p.id_producto 
-    order by cantidad DESC`;
+    order by cantidad DESC
+    limit 3`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
@@ -166,7 +168,8 @@ app.get('/reporteTopProductoMenosVendido/:id', (req, res) => {
     ON df.id_producto = p.id_producto
     where p.id_empresa = '${[id]}'
     group by p.id_producto 
-    order by cantidad ASC`;
+    order by cantidad ASC
+    limit 3`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
