@@ -156,7 +156,7 @@ app.get('/reporteTopProductoMasVendido ', (req, res) => {
 //obtener el reporte menos vendido
 app.get('/reporteTopProductoMenosVendido ', (req, res) => {
     const { id } = req.params;
-    let sql = `SELECT * FROM promocion WHERE activo = 1`;
+    let sql = `SELECT * FROM promocion WHERE activoNoActivo = 1`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
