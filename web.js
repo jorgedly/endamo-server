@@ -97,10 +97,9 @@ app.get('/producto/:id', (req, res) => {
 
 //ingresar promocion
 app.post('/ingresarPromocion', (req, res) => {
-    let id_promocion = id_producto;
-    const {id_promocion, ActivoNoActivo, id_empresa, id_producto } = req.body;
-    let SQLquery = `INSERT INTO promocion(id_promocion,ActivoNoActivo,id_empresa,id_producto) 
-    VALUES (${id_promocion},${ActivoNoActivo},${id_empresa},${id_producto})`;
+    const { ActivoNoActivo, id_empresa, id_producto } = req.body;
+    let SQLquery = `INSERT INTO promocion(ActivoNoActivo,id_empresa,id_producto) 
+    VALUES (${ActivoNoActivo},${id_empresa},${id_producto})`;
     let result = conn.query(SQLquery, (err, results) => {
         if (!err) {
             res.json({ 'Response:': 'promocion added correctly' });
@@ -153,7 +152,7 @@ app.get('/reporteTopProductoMasVendido/:id', (req, res) => {
     where p.id_empresa = '${[id]}'
     group by p.id_producto 
     order by cantidad DESC
-    limit 3`;
+    limit`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
