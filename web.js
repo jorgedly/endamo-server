@@ -152,7 +152,7 @@ app.get('/reporteTopProductoMasVendido/:id', (req, res) => {
     where p.id_empresa = '${[id]}'
     group by p.id_producto 
     order by cantidad DESC
-    limit`;
+    limit 3`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
