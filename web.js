@@ -161,4 +161,15 @@ app.get('/reporteTopProductoMenosVendido ', (req, res) => {
     })
 });
 
+app.post('/getId', (req,res )=>{
+    const { email } = req.body;
+
+    let sql = `SELECT id_usuario FROM usuario WHERE email = '${email}'`;
+    let query = conn.query(sql, (err, results) => {
+        if(err) res.send({'Error': err});
+
+        res.send(results);
+    });
+})
+
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`))
