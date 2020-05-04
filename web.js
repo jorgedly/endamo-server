@@ -172,4 +172,17 @@ app.post('/getId', (req,res )=>{
     });
 })
 
+//insertar factura
+app.post('/crearFactura', (req, res) => {
+    const { fecha, id_usuario, total, nit, nombre } = req.body;
+    let sql = `INSERT INTO factura(fecha,id_usuario,total,nit,nombre) VALUES ('${fecha}',${id_usuario},${total},'${nit}','${nombre}')`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({ 'creado': 0 });
+        } else {
+            res.send({ 'creado': results.insertId  });
+        }
+    });
+});
+
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`))
