@@ -94,4 +94,73 @@ app.get('/producto/:id', (req, res) => {
     })
 });
 
+
+//ingresar promocion
+app.post('/ingresarPromocion', (req, res) => {
+    const { ActivoNoActivo,id_empresa, id_producto } = req.body;
+    let SQLquery = `INSERT INTO promocion(ActivoNoActivo,id_empresa,id_producto) 
+    VALUES (${ActivoNoActivo},${id_empresa},${id_producto})`;
+    let result = conn.query(SQLquery, (err, results) => {
+        if (!err) {
+            res.json({ 'Response:': 'Product added correctly' });
+        } else
+            res.json({ 'Response:': 'Error' });
+    })
+});
+
+// eliminar la promocion
+app.delete('/eliminarPromocion/:id', (req, res) => {
+    const { id } = req.params;
+    let sql = `DELETE FROM promocion WHERE id_promocion = '${[id]}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            err.json({ messaje: "Erro al eliminar promocion" });
+        } else {
+            res.json({ message: "La promoción se ha eliminado" });
+        }
+    })
+});
+
+
+//obtener las promociones de cada empresa
+app.post('/promocion', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM promocion WHERE activo = 1 AND id_empresa = '${id}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+});
+
+//obtener las promociones activas
+app.get('/promocion', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM promocion WHERE activo = 1`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+});
+
+
+//obtener el reporte mas vendido
+app.get('/reporteTopProductoMasVendido ', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM promocion WHERE activo = 1`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+});
+
+//obtener el reporte menos vendido
+app.get('/reporteTopProductoMenosVendido ', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM promocion WHERE activo = 1`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+});
+
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`))
