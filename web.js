@@ -144,6 +144,16 @@ app.get('/promocion/:id', (req, res) => {
     })
 });
 
+//obtener las promocion de producto
+app.get('/promocionProducto/:id', (req, res) => {
+    const { id } = req.params;
+    let sql = `SELECT * FROM promocion WHERE activoNoActivo = 1 AND id_producto =  '${[id]}'`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+});
+
 
 //obtener el reporte mas vendido
 app.get('/reporteTopProductoMasVendido/:id', (req, res) => {
