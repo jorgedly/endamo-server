@@ -99,9 +99,9 @@ app.get('/producto/:id', (req, res) => {
 
 //ingresar promocion
 app.post('/ingresarPromocion', (req, res) => {
-    const { ActivoNoActivo, id_empresa, id_producto } = req.body;
-    let SQLquery = `INSERT INTO promocion(ActivoNoActivo,id_empresa,id_producto) 
-    VALUES (${ActivoNoActivo},${id_empresa},${id_producto})`;
+    const { ActivoNoActivo, id_empresa, id_producto,descripcion } = req.body;
+    let SQLquery = `INSERT INTO promocion(ActivoNoActivo,id_empresa,id_producto,descripcion) 
+    VALUES (${ActivoNoActivo},${id_empresa},${id_producto},'${descripcion}')`;
     let result = conn.query(SQLquery, (err, results) => {
         if (!err) {
             res.json({ 'Response:': 'promocion added correctly' });
@@ -127,7 +127,7 @@ app.delete('/eliminarPromocion/:id', (req, res) => {
 //obtener las promociones de cada empresa
 app.post('/promocion', (req, res) => {
     const { id } = req.params;
-    let sql = `SELECT * FROM promocion WHERE activoNoActivo = 1 AND id_empresa = '${id}'`;
+    let sql = `SELECT * FROM promocion WHERE activoNoActivo = 1 AND id_empresa = '${[id]}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
