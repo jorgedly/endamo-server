@@ -125,7 +125,7 @@ app.delete('/eliminarPromocion/:id', (req, res) => {
 
 
 //obtener las promociones de cada empresa
-app.post('/promocion', (req, res) => {
+app.post('/promocion2', (req, res) => {
     const { id } = req.params;
     let sql = `SELECT * FROM promocion WHERE activoNoActivo = 1 AND id_empresa = '${[id]}'`;
     let query = conn.query(sql, (err, results) => {
