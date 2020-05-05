@@ -135,9 +135,8 @@ app.post('/promocion', (req, res) => {
 });
 
 //obtener las promociones activas
-app.get('/promocion', (req, res) => {
-    const { id } = req.params;
-    let sql = `SELECT * FROM promocion WHERE activoNoActivo = 1`;
+app.get('/promocion/:id', (req, res) => {
+    let sql = `SELECT * FROM promocion WHERE activoNoActivo = 1 AND id_empresa =  '${[id]}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
